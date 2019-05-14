@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         loView.setVisibility(View.GONE);
         imgChart.setVisibility(View.GONE);
         imgText.setVisibility(View.VISIBLE);
+        isText = false;
         if(rdgTime.getCheckedRadioButtonId() == R.id.rb_month){
             txtChartDemo.setText("month chart");
         } else {
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         loView.setVisibility(View.VISIBLE);
         imgChart.setVisibility(View.VISIBLE);
         imgText.setVisibility(View.GONE);
+        isText = true;
         if(rdgTime.getCheckedRadioButtonId() == R.id.rb_month){
             txtChartDemo.setText("month chart");
         } else {

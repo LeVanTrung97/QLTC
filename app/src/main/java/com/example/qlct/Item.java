@@ -3,9 +3,8 @@ package com.example.qlct;
 import java.io.Serializable;
 import java.util.Date;
 
-import io.realm.RealmObject;
-
-public class Item extends RealmObject implements Serializable {
+//public class Item extends RealmObject implements Serializable {
+public class Item implements Serializable {
 
     private int id;
     private int type; //type=1: Item; type=2: Expensis
@@ -15,11 +14,12 @@ public class Item extends RealmObject implements Serializable {
     private String note;
     private String amount;
     private String url;
+    private boolean isChecked;
 
     public Item() {
     }
 
-    public Item(int id, int type, String name, String topic, Date time, String note, String amount, String url) {
+    public Item(int id, int type, String name, String topic, Date time, String note, String amount, String url, boolean isChecked) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -28,6 +28,7 @@ public class Item extends RealmObject implements Serializable {
         this.note = note;
         this.amount = amount;
         this.url = url;
+        this.isChecked = isChecked;
     }
 
     public int getId() {
@@ -92,6 +93,14 @@ public class Item extends RealmObject implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     @Override

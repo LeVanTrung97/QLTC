@@ -1,4 +1,6 @@
-package com.example.qlct;
+package com.example.qlct.model;
+
+import android.text.Editable;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,10 +9,10 @@ import java.util.Date;
 public class Item implements Serializable {
 
     private int id;
-    private int type; //type=1: Item; type=2: Expensis
+    private int type; //type=1: Item; type=2: Expensis;
     private String name;
     private String topic;
-    private Date time;
+    private String time;
     private String note;
     private String amount;
     private String url;
@@ -19,7 +21,18 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(int id, int type, String name, String topic, Date time, String note, String amount, String url, boolean isChecked) {
+    public Item(int type, String name, String topic, String time, String note, String amount, String url) {
+        this.type = type;
+        this.name = name;
+        this.topic = topic;
+        this.time = time;
+        this.note = note;
+        this.amount = amount;
+        this.url = url;
+        this.isChecked = false;
+    }
+
+    public Item(int id, int type, String name, String topic, String time, String note, String amount, String url, boolean isChecked) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -63,11 +76,11 @@ public class Item implements Serializable {
         this.topic = topic;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

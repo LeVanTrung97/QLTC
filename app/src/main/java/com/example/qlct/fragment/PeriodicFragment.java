@@ -1,16 +1,19 @@
-package com.example.qlct;
+package com.example.qlct.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.qlct.dialog.AddDialog;
+import com.example.qlct.R;
+import com.example.qlct.adapter.PeriodicAdapter;
+import com.example.qlct.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +43,7 @@ public class PeriodicFragment extends Fragment {
 
     private void initData() {
         periodicList.clear();
-        Item a = new Item(1, 1, "Tiền nhà", "Phí sinh hoạt", null, "", "3.000.000", "", false);
+        Item a = new Item(2, "Tiền nhà", "Phí sinh hoạt", null, "", "3.000.000", "");
         periodicList.add(a);
     }
 
@@ -54,9 +57,15 @@ public class PeriodicFragment extends Fragment {
 
     @OnClick(R.id.btn_add)
     void add(){
-        AddDialog addDialog1 = AddDialog.newInstance("Some Title");
-        addDialog1.show(getActivity().getSupportFragmentManager(), "dialog_add");
-        addDialog1.setCancelable(false);
+        final AddDialog addDialog = AddDialog.newInstance("Some Title", 2, new AddDialog.Callback() {
+            @Override
+            public void onResult() {
+                //todo update lai data get tu realm
+                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            }
+        });
+        addDialog.show(getActivity().getSupportFragmentManager(), "dialog_add");
+        addDialog.setCancelable(false);
     }
 
 }

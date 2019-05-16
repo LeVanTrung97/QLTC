@@ -1,4 +1,4 @@
-package com.example.qlct;
+package com.example.qlct.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -1,4 +1,4 @@
-package com.example.qlct;
+package com.example.qlct.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.qlct.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;

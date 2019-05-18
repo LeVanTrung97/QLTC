@@ -49,20 +49,40 @@ public class AddFragment extends Fragment {
     }
 
     private void initViews() {
-        addAdapter = new AddAdapter(getContext(), addList);
+        addAdapter = new AddAdapter(getContext(), addList, new AddAdapter.OnItemClick() {
+            @Override
+            public void onItemClick(int pos) {
+                Item item = addList.get(pos);
+                showEditDialog(item);
+            }
+        });
         rcvAdd.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         rcvAdd.setLayoutManager(layoutManager);
         rcvAdd.setAdapter(addAdapter);
     }
 
+    private void showEditDialog(Item item) {
+        AddDialog editDialog = AddDialog.newInstance(item, "Some Title", 1, true, new AddDialog.Callback() {
+            @Override
+            public void onResult(Item item) {
+                //todo update lai data get tu realm sau khi sua
+                addList.add(item);
+                addAdapter.notifyDataSetChanged();
+            }
+        });
+        editDialog.show(getActivity().getSupportFragmentManager(), "dialog_edit");
+        editDialog.setCancelable(false);
+    }
+
     @OnClick(R.id.btn_add)
     void add(){
-        final AddDialog addDialog = AddDialog.newInstance("Some Title", 1, new AddDialog.Callback() {
+        final AddDialog addDialog = AddDialog.newInstance(null, "Some Title", 1, true, new AddDialog.Callback() {
             @Override
-            public void onResult() {
-                //todo update lai data get tu realm
-                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            public void onResult(Item item) {
+                //todo update lai data get tu realm sau khi them moi
+                addList.add(item);
+                addAdapter.notifyDataSetChanged();
             }
         });
         addDialog.show(getActivity().getSupportFragmentManager(), "dialog_add");

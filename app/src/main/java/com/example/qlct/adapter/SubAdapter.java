@@ -1,6 +1,7 @@
 package com.example.qlct.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,6 +40,11 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
         viewHolder.txtName.setText(item.getName());
         viewHolder.txtAmount.setText(item.getAmount());
         viewHolder.txtTime.setText(item.getTime());
+
+        if(item.getUrl() != ""){
+            Uri uri = Uri.parse(item.getUrl());
+            viewHolder.imgBill.setImageURI(uri);
+        }
     }
 
     @Override

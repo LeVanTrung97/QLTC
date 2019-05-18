@@ -1,6 +1,8 @@
 package com.example.qlct.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.qlct.R;
 import com.example.qlct.model.Item;
 
@@ -20,9 +23,12 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
     private List<Item> addList;
     private Context context;
 
-    public AddAdapter(Context context, List<Item> addList) {
+    private OnItemClick onItemClick;
+
+    public AddAdapter(Context context, List<Item> addList, OnItemClick onItemClick) {
         this.addList = addList;
         this.context = context;
+        this.onItemClick = onItemClick;
     }
 
     @NonNull
@@ -40,6 +46,13 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         viewHolder.txtName.setText(item.getName());
         viewHolder.txtAmount.setText(item.getAmount());
         viewHolder.txtTime.setText(item.getTime());
+
+        if(item.getUrl() != ""){
+            Uri uri = Uri.parse(item.getUrl());
+            viewHolder.imgBill.setImageURI(uri);
+        }
+
+        viewHolder.bind(i, onItemClick);
     }
 
     @Override
@@ -63,6 +76,19 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
             txtAmount = itemView.findViewById(R.id.txt_amount);
             txtTime = itemView.findViewById(R.id.txt_time);
         }
+
+        public void bind(final int pos, final OnItemClick listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(pos);
+                }
+            });
+        }
     }
+
+    public interface OnItemClick{
+        void onItemClick(int pos);
+    }
+
 }
 

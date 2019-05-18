@@ -57,11 +57,12 @@ public class PeriodicFragment extends Fragment {
 
     @OnClick(R.id.btn_add)
     void add(){
-        final AddDialog addDialog = AddDialog.newInstance("Some Title", 2, new AddDialog.Callback() {
+        final AddDialog addDialog = AddDialog.newInstance(null, "Some Title", 2, false, new AddDialog.Callback() {
             @Override
-            public void onResult() {
+            public void onResult(Item item) {
                 //todo update lai data get tu realm
-                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+                periodicList.add(item);
+                periodicAdapter.notifyDataSetChanged();
             }
         });
         addDialog.show(getActivity().getSupportFragmentManager(), "dialog_add");

@@ -53,8 +53,15 @@ public class RealmController {
     public void updateItem(Item item) {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        RealmResults<Item> results = realm.where(Item.class).equalTo("id", item.getId()).findAll();
-        results.deleteAllFromRealm();
+        Item realmItem = realm.where(Item.class).equalTo("id", item.getId()).findFirst();
+        realmItem.setId(item.getId());
+        realmItem.setType(item.getType());
+        realmItem.setName(item.getName());
+        realmItem.setTopic(item.getTopic());
+        realmItem.setTime(item.getTime());
+        realmItem.setNote(item.getNote());
+        realmItem.setAmount(item.getAmount());
+        realmItem.setUrl(item.getUrl());
         realm.commitTransaction();
     }
 

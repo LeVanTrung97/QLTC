@@ -49,10 +49,6 @@ public class PeriodicFragment extends Fragment {
         realmController = new RealmController();
 
         periodicList = realmController.getItem(3);
-
-//        periodicList.clear();
-//        Item a = new Item(MainActivity.id++, 3, "Tiền nhà", "Phí sinh hoạt", null, "", "3.000.000", "");
-//        periodicList.add(a);
     }
 
     private void initViews() {
@@ -62,6 +58,14 @@ public class PeriodicFragment extends Fragment {
             public void onItemClick(int pos) {
                 Item item = periodicList.get(pos);
                 showEditDialog(item);
+            }
+
+            @Override
+            public void onDelete(int pos) {
+                Item item = periodicList.get(pos);
+                realmController.deleteItem(item);
+                periodicList = realmController.getItem(1);
+                periodicAdapter.notifyDataSetChanged();
             }
         });
         rcvPeriodic.setHasFixedSize(true);
@@ -76,8 +80,6 @@ public class PeriodicFragment extends Fragment {
             @Override
             public void onResult(Item item) {
                 //todo update lai data get tu realm
-//                periodicList.add(item);
-//                periodicAdapter.notifyDataSetChanged();
                 periodicList = realmController.getItem(3);
                 periodicAdapter.notifyDataSetChanged();
             }

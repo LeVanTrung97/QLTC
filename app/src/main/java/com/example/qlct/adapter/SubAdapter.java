@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,6 +59,13 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
                 onItemClick.onItemClick(i);
             }
         });
+
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick.onDelete(i);
+            }
+        });
     }
 
     @Override
@@ -71,7 +79,7 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
         TextView txtName;
         TextView txtAmount;
         TextView txtTime;
-
+        Button btnDelete;
 
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -80,11 +88,13 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
             txtName = itemView.findViewById(R.id.txt_name);
             txtAmount = itemView.findViewById(R.id.txt_amount);
             txtTime = itemView.findViewById(R.id.txt_time);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
         }
     }
 
     public interface OnItemClick{
         void onItemClick(int pos);
+        void onDelete(int pos);
     }
 
 }

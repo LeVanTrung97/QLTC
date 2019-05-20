@@ -50,10 +50,6 @@ public class SubFragment extends Fragment {
         realmController = new RealmController();
 
         subList = realmController.getItem(2);
-
-//        subList.clear();
-//        Item a = new Item(MainActivity.id++, 2, "Giày", "Mua sắm", "18/5/2019", "", "1.000.000", "");
-//        subList.add(a);
     }
 
     private void initViews() {
@@ -63,6 +59,14 @@ public class SubFragment extends Fragment {
             public void onItemClick(int pos) {
                 Item item = subList.get(pos);
                 showEditDialog(item);
+            }
+
+            @Override
+            public void onDelete(int pos) {
+                Item item = subList.get(pos);
+                realmController.deleteItem(item);
+                subList = realmController.getItem(1);
+                subAdapter.notifyDataSetChanged();
             }
         });
         rcvSub.setHasFixedSize(true);
@@ -89,9 +93,7 @@ public class SubFragment extends Fragment {
         final AddDialog addDialog = AddDialog.newInstance(null, "Some Title", 2, true, new AddDialog.Callback() {
             @Override
             public void onResult(Item item) {
-                //todo update lai data get tu realm
-//                subList.add(item);
-//                subAdapter.notifyDataSetChanged();
+                //todo update lai data get tu realm sau khi them
                 subList = realmController.getItem(2);
                 subAdapter.notifyDataSetChanged();
             }

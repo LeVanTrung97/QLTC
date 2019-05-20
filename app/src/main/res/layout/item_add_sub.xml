@@ -22,7 +22,7 @@
     <TextView
         android:id="@+id/txt_time"
         android:text="12/4/2019"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@id/btn_delete"
         android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -41,8 +41,7 @@
         android:id="@+id/txt_amount"
         android:text="3.000.000"
         android:layout_below="@id/txt_topic"
-        android:layout_alignParentRight="true"
-
+        android:layout_toLeftOf="@id/btn_delete"
         android:textSize="20sp"
         android:layout_marginTop="4dp"
         android:layout_width="wrap_content"
@@ -55,5 +54,14 @@
         android:background="#6b6b6b"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:background="@drawable/icon_delete"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp" />
 
 </RelativeLayout>

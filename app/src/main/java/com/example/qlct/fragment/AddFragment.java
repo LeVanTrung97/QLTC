@@ -51,9 +51,6 @@ public class AddFragment extends Fragment {
 
         addList = realmController.getItem(1);
 
-//        addList.clear();
-//        Item a = new Item(MainActivity.id++, 1, "Tiền lương", "Công việc", "12/4/2019", "", "7.000.000", "");
-//        addList.add(a);
     }
 
     private void initViews() {
@@ -63,6 +60,14 @@ public class AddFragment extends Fragment {
             public void onItemClick(int pos) {
                 Item item = addList.get(pos);
                 showEditDialog(item);
+            }
+
+            @Override
+            public void onDelete(int pos) {
+                Item item = addList.get(pos);
+                realmController.deleteItem(item);
+                addList = realmController.getItem(1);
+                addAdapter.notifyDataSetChanged();
             }
         });
         rcvAdd.setHasFixedSize(true);
@@ -90,9 +95,6 @@ public class AddFragment extends Fragment {
             @Override
             public void onResult(Item item) {
                 //todo update lai data get tu realm sau khi them moi
-//                addList.add(item);
-//                addAdapter.notifyDataSetChanged();
-                realmController.addItem(item);
                 addList = realmController.getItem(1);
                 addAdapter.notifyDataSetChanged();
             }

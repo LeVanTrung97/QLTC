@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.qlct.R;
 import com.example.qlct.model.Item;
 
+import java.io.File;
 import java.util.List;
 
 public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
@@ -50,15 +52,23 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         viewHolder.txtAmount.setText(item.getAmount());
         viewHolder.txtTime.setText(item.getTime());
 
-        if(item.getUrl() != "" && item.getUrl() != null){
+        if(item.getUrl() != null && item.getUrl() != null){
             Uri uri = Uri.parse(item.getUrl());
             viewHolder.imgBill.setImageURI(uri);
+
         }
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onItemClick.onItemClick(i);
+            }
+        });
+
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick.onDelete(i);
             }
         });
     }
@@ -74,6 +84,7 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         TextView txtName;
         TextView txtAmount;
         TextView txtTime;
+        Button btnDelete;
 
 
         public ViewHolder(View itemView, int viewType) {
@@ -83,11 +94,13 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
             txtName = itemView.findViewById(R.id.txt_name);
             txtAmount = itemView.findViewById(R.id.txt_amount);
             txtTime = itemView.findViewById(R.id.txt_time);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
         }
     }
 
     public interface OnItemClick{
         void onItemClick(int pos);
+        void onDelete(int pos);
     }
 
 }

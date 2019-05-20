@@ -33,7 +33,7 @@
 
     <CheckBox
         android:id="@+id/rb_periodic"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@id/btn_delete"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -44,5 +44,14 @@
         android:background="#6b6b6b"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:background="@drawable/icon_delete"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp" />
 
 </RelativeLayout>

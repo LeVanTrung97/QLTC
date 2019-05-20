@@ -17,10 +17,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.qlct.R;
+import com.example.qlct.activity.MainActivity;
 import com.example.qlct.model.Item;
 import com.example.qlct.realm.RealmController;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,6 +48,7 @@ public class AddDialog extends DialogFragment {
     private boolean addBill;
     private Callback callback;
     private Item item;
+    private Item itemNew;
 
     private RealmController realmController;
 
@@ -87,23 +91,25 @@ public class AddDialog extends DialogFragment {
         String topic = getArguments().getString("topic", "Enter Name");
         getDialog().setTitle(topic);
 
+        realmController = new RealmController();
+
         if(item != null){
+            itemNew = new Item();
             edtTopic.setText(item.getTopic());
             edtName.setText(item.getName());
             edtAmount.setText(item.getAmount());
             txtTime.setText(item.getTime());
-            if(item.getUrl() != "" && item.getUrl() != null){
+            if(item.getUrl() != null && item.getUrl() != null){
+//                Glide.with(getContext()).load(new File(item.getUrl())).placeholder(R.drawable.ic_launcher_background).into(imgBill);
                 Uri uri = Uri.parse(item.getUrl());
                 imgBill.setImageURI(uri);
             }
         } else {
-            item = new Item();
+            itemNew = new Item();
             Date date = new Date();
             String strDateFormat = "dd/MM/yyyy";
             SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
             txtTime.setText(sdf.format(date));
-
-            imgBill.setImageResource(R.drawable.ic_launcher_background);
         }
 
         imgTime.setOnClickListener(new View.OnClickListener() {
@@ -124,9 +130,8 @@ public class AddDialog extends DialogFragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                saveToRealm();
                 getItem();
-                callback.onResult(item);
+                callback.onResult(itemNew);
                 dismiss();
             }
         });
@@ -152,7 +157,8 @@ public class AddDialog extends DialogFragment {
             switch (requestCode){
                 case GALLERY_REQUEST_CODE:
                     Uri selectedImage = data.getData();
-//                    item.setUrl(selectedImage.toString());
+
+                    itemNew.setUrl(selectedImage.toString());
                     imgBill.setImageURI(selectedImage);
                     break;
             }
@@ -175,16 +181,21 @@ public class AddDialog extends DialogFragment {
     }
 
     private void getItem() {
-        item.setType(type);
-        item.setName(edtName.getText().toString());
-        item.setTopic(edtTopic.getText().toString());
-        item.setTime(txtTime.getText().toString());
-        item.setAmount(edtAmount.getText().toString());
-//        item.setUrl(imgBill.get);
+        itemNew.setType(type);
+        itemNew.setName(edtName.getText().toString());
+        itemNew.setTopic(edtTopic.getText().toString());
+        itemNew.setTime(txtTime.getText().toString());
+        itemNew.setAmount(edtAmount.getText().toString());
         //todo save to realm
+        if(item != null){
+            itemNew.setId(item.getId());
+            itemNew.setUrl(item.getUrl());
+            realmController.updateItem(itemNew);
+        } else {
+            itemNew.setId((int) System.currentTimeMillis());
+            realmController.addItem(itemNew);
+        }
 
-//        realmController = new RealmController();
-//        realmController.addItem(item);
     }
 
     public interface Callback{

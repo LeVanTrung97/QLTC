@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.qlct.adapter.PagerAdapter;
 import com.example.qlct.fragment.AddFragment;
+import com.example.qlct.fragment.OverViewFragment;
 import com.example.qlct.fragment.PeriodicFragment;
 import com.example.qlct.R;
 import com.example.qlct.fragment.SubFragment;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         adapter = new PagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new OverViewFragment(), "Thống kê");
         adapter.addFragment(new AddFragment(), "Thu");
         adapter.addFragment(new SubFragment(), "Chi");
         adapter.addFragment(new PeriodicFragment(), "Định kỳ");

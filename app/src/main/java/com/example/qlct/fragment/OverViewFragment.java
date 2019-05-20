@@ -1,10 +1,13 @@
-package com.example.qlct.activity;
+package com.example.qlct.fragment;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -28,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HomeActivity extends AppCompatActivity {
+public class OverViewFragment extends Fragment {
 
     @BindView(R.id.lo_view)
     LinearLayout loView;
@@ -62,13 +65,14 @@ public class HomeActivity extends AppCompatActivity {
     private float groupSpace = 0.4f;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_overview);
-        ButterKnife.bind(this);
+        View view = inflater.inflate(R.layout.fragment_overview, container, false);
+        ButterKnife.bind(this, view);
         fillData();
         initView();
         initChart();
+        return view;
     }
 
     private void fillData() {
@@ -203,4 +207,6 @@ public class HomeActivity extends AppCompatActivity {
             txtChartDemo.setText("year chart");
         }
     }
+
+
 }

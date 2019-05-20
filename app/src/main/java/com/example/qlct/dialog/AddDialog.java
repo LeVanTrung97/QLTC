@@ -92,7 +92,7 @@ public class AddDialog extends DialogFragment {
             edtName.setText(item.getName());
             edtAmount.setText(item.getAmount());
             txtTime.setText(item.getTime());
-            if(item.getUrl() != ""){
+            if(item.getUrl() != "" && item.getUrl() != null){
                 Uri uri = Uri.parse(item.getUrl());
                 imgBill.setImageURI(uri);
             }

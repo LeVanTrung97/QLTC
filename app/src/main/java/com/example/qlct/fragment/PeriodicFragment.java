@@ -51,7 +51,7 @@ public class PeriodicFragment extends Fragment {
         periodicList = realmController.getItem(3);
 
 //        periodicList.clear();
-//        Item a = new Item(MainActivity.id++, 2, "Tiền nhà", "Phí sinh hoạt", null, "", "3.000.000", "");
+//        Item a = new Item(MainActivity.id++, 3, "Tiền nhà", "Phí sinh hoạt", null, "", "3.000.000", "");
 //        periodicList.add(a);
     }
 
@@ -72,7 +72,7 @@ public class PeriodicFragment extends Fragment {
 
     @OnClick(R.id.btn_add)
     void add(){
-        final AddDialog addDialog = AddDialog.newInstance(null, "Some Title", 2, false, new AddDialog.Callback() {
+        final AddDialog addDialog = AddDialog.newInstance(null, "Some Title", 3, false, new AddDialog.Callback() {
             @Override
             public void onResult(Item item) {
                 //todo update lai data get tu realm

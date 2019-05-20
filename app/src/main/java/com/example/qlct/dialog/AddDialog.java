@@ -124,7 +124,8 @@ public class AddDialog extends DialogFragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveToRealm();
+//                saveToRealm();
+                getItem();
                 callback.onResult(item);
                 dismiss();
             }
@@ -151,7 +152,7 @@ public class AddDialog extends DialogFragment {
             switch (requestCode){
                 case GALLERY_REQUEST_CODE:
                     Uri selectedImage = data.getData();
-                    item.setUrl(String.valueOf(selectedImage));
+//                    item.setUrl(selectedImage.toString());
                     imgBill.setImageURI(selectedImage);
                     break;
             }
@@ -173,16 +174,17 @@ public class AddDialog extends DialogFragment {
         datePickerDialog.setCancelable(false);
     }
 
-    private void saveToRealm() {
+    private void getItem() {
         item.setType(type);
         item.setName(edtName.getText().toString());
         item.setTopic(edtTopic.getText().toString());
         item.setTime(txtTime.getText().toString());
         item.setAmount(edtAmount.getText().toString());
-        //todo save to real
+//        item.setUrl(imgBill.get);
+        //todo save to realm
 
-        realmController = new RealmController();
-        realmController.addItem(item);
+//        realmController = new RealmController();
+//        realmController.addItem(item);
     }
 
     public interface Callback{

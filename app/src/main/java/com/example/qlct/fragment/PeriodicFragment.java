@@ -60,8 +60,8 @@ public class PeriodicFragment extends Fragment {
         periodicAdapter.setOnItemClick(new PeriodicAdapter.OnItemClick() {
             @Override
             public void onItemClick(int pos) {
-                periodicList = realmController.getItem(3);
-                periodicAdapter.notifyDataSetChanged();
+                Item item = periodicList.get(pos);
+                showEditDialog(item);
             }
         });
         rcvPeriodic.setHasFixedSize(true);
@@ -84,6 +84,19 @@ public class PeriodicFragment extends Fragment {
         });
         addDialog.show(getActivity().getSupportFragmentManager(), "dialog_period");
         addDialog.setCancelable(false);
+    }
+
+    private void showEditDialog(Item item) {
+        AddDialog editDialog = AddDialog.newInstance(item, "Some Title", 3, true, new AddDialog.Callback() {
+            @Override
+            public void onResult(Item item) {
+                //todo update lai data get tu realm sau khi sua
+                periodicList = realmController.getItem(3);
+                periodicAdapter.notifyDataSetChanged();
+            }
+        });
+        editDialog.show(getActivity().getSupportFragmentManager(), "dialog_edit");
+        editDialog.setCancelable(false);
     }
 
 }

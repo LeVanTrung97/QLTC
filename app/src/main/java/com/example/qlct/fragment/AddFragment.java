@@ -92,6 +92,7 @@ public class AddFragment extends Fragment {
                 //todo update lai data get tu realm sau khi them moi
 //                addList.add(item);
 //                addAdapter.notifyDataSetChanged();
+                realmController.addItem(item);
                 addList = realmController.getItem(1);
                 addAdapter.notifyDataSetChanged();
             }
@@ -99,5 +100,6 @@ public class AddFragment extends Fragment {
         addDialog.show(getActivity().getSupportFragmentManager(), "dialog_add");
         addDialog.setCancelable(false);
     }
+
 
 }

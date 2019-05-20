@@ -72,7 +72,7 @@ public class SubFragment extends Fragment {
     }
 
     private void showEditDialog(Item item) {
-        AddDialog editDialog = AddDialog.newInstance(item, "Some Title", 1, true, new AddDialog.Callback() {
+        AddDialog editDialog = AddDialog.newInstance(item, "Some Title", 2, true, new AddDialog.Callback() {
             @Override
             public void onResult(Item item) {
                 //todo update lai data get tu realm sau khi sua

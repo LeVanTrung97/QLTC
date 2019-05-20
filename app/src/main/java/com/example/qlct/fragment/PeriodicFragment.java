@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.qlct.activity.MainActivity;
 import com.example.qlct.dialog.AddDialog;
 import com.example.qlct.R;
 import com.example.qlct.adapter.PeriodicAdapter;
 import com.example.qlct.model.Item;
+import com.example.qlct.realm.RealmController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,8 @@ public class PeriodicFragment extends Fragment {
     private PeriodicAdapter periodicAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private RealmController realmController;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +46,24 @@ public class PeriodicFragment extends Fragment {
     }
 
     private void initData() {
-        periodicList.clear();
-        Item a = new Item(2, "Tiền nhà", "Phí sinh hoạt", null, "", "3.000.000", "");
-        periodicList.add(a);
+        realmController = new RealmController();
+
+        periodicList = realmController.getItem(3);
+
+//        periodicList.clear();
+//        Item a = new Item(MainActivity.id++, 2, "Tiền nhà", "Phí sinh hoạt", null, "", "3.000.000", "");
+//        periodicList.add(a);
     }
 
     private void initViews() {
         periodicAdapter = new PeriodicAdapter(getContext(), periodicList);
+        periodicAdapter.setOnItemClick(new PeriodicAdapter.OnItemClick() {
+            @Override
+            public void onItemClick(int pos) {
+                periodicList = realmController.getItem(3);
+                periodicAdapter.notifyDataSetChanged();
+            }
+        });
         rcvPeriodic.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         rcvPeriodic.setLayoutManager(layoutManager);
@@ -61,11 +76,13 @@ public class PeriodicFragment extends Fragment {
             @Override
             public void onResult(Item item) {
                 //todo update lai data get tu realm
-                periodicList.add(item);
+//                periodicList.add(item);
+//                periodicAdapter.notifyDataSetChanged();
+                periodicList = realmController.getItem(3);
                 periodicAdapter.notifyDataSetChanged();
             }
         });
-        addDialog.show(getActivity().getSupportFragmentManager(), "dialog_add");
+        addDialog.show(getActivity().getSupportFragmentManager(), "dialog_period");
         addDialog.setCancelable(false);
     }
 

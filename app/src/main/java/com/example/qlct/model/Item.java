@@ -5,8 +5,10 @@ import android.text.Editable;
 import java.io.Serializable;
 import java.util.Date;
 
+import io.realm.RealmObject;
+
 //public class Item extends RealmObject implements Serializable {
-public class Item implements Serializable {
+public class Item extends RealmObject implements Serializable {
 
     private int id;
     private int type; //type=1: Item; type=2: Expensis;
@@ -21,18 +23,18 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(int type, String name, String topic, String time, String note, String amount, String url) {
-        this.type = type;
-        this.name = name;
-        this.topic = topic;
-        this.time = time;
-        this.note = note;
-        this.amount = amount;
-        this.url = url;
-        this.isChecked = false;
-    }
+//    public Item(int type, String name, String topic, String time, String note, String amount, String url) {
+//        this.type = type;
+//        this.name = name;
+//        this.topic = topic;
+//        this.time = time;
+//        this.note = note;
+//        this.amount = amount;
+//        this.url = url;
+//        this.isChecked = false;
+//    }
 
-    public Item(int id, int type, String name, String topic, String time, String note, String amount, String url, boolean isChecked) {
+    public Item(int id, int type, String name, String topic, String time, String note, String amount, String url) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -41,7 +43,7 @@ public class Item implements Serializable {
         this.note = note;
         this.amount = amount;
         this.url = url;
-        this.isChecked = isChecked;
+        this.isChecked = false;
     }
 
     public int getId() {

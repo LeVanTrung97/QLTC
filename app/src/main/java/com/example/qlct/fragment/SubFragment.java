@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.qlct.R;
+import com.example.qlct.activity.MainActivity;
 import com.example.qlct.adapter.AddAdapter;
 import com.example.qlct.adapter.SubAdapter;
 import com.example.qlct.dialog.AddDialog;
 import com.example.qlct.model.Item;
+import com.example.qlct.realm.RealmController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,8 @@ public class SubFragment extends Fragment {
     private SubAdapter subAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private RealmController realmController;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,17 +47,41 @@ public class SubFragment extends Fragment {
     }
 
     private void initData() {
-        subList.clear();
-        Item a = new Item(2, "Giày", "Mua sắm", "18/5/2019", "", "1.000.000", "");
-        subList.add(a);
+        realmController = new RealmController();
+
+        subList = realmController.getItem(2);
+
+//        subList.clear();
+//        Item a = new Item(MainActivity.id++, 2, "Giày", "Mua sắm", "18/5/2019", "", "1.000.000", "");
+//        subList.add(a);
     }
 
     private void initViews() {
         subAdapter = new SubAdapter(getContext(), subList);
+        subAdapter.setOnItemClick(new SubAdapter.OnItemClick() {
+            @Override
+            public void onItemClick(int pos) {
+                Item item = subList.get(pos);
+                showEditDialog(item);
+            }
+        });
         rcvSub.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         rcvSub.setLayoutManager(layoutManager);
         rcvSub.setAdapter(subAdapter);
+    }
+
+    private void showEditDialog(Item item) {
+        AddDialog editDialog = AddDialog.newInstance(item, "Some Title", 1, true, new AddDialog.Callback() {
+            @Override
+            public void onResult(Item item) {
+                //todo update lai data get tu realm sau khi sua
+                subList = realmController.getItem(2);
+                subAdapter.notifyDataSetChanged();
+            }
+        });
+        editDialog.show(getActivity().getSupportFragmentManager(), "dialog_edit");
+        editDialog.setCancelable(false);
     }
 
     @OnClick(R.id.btn_add)
@@ -62,12 +90,13 @@ public class SubFragment extends Fragment {
             @Override
             public void onResult(Item item) {
                 //todo update lai data get tu realm
-                subList.add(item);
+//                subList.add(item);
+//                subAdapter.notifyDataSetChanged();
+                subList = realmController.getItem(2);
                 subAdapter.notifyDataSetChanged();
-
             }
         });
-        addDialog.show(getActivity().getSupportFragmentManager(), "dialog_add");
+        addDialog.show(getActivity().getSupportFragmentManager(), "dialog_sub");
         addDialog.setCancelable(false);
     }
 

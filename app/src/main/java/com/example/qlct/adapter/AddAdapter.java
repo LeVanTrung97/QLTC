@@ -25,10 +25,13 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
 
     private OnItemClick onItemClick;
 
-    public AddAdapter(Context context, List<Item> addList, OnItemClick onItemClick) {
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
+    public AddAdapter(Context context, List<Item> addList) {
         this.addList = addList;
         this.context = context;
-        this.onItemClick = onItemClick;
     }
 
     @NonNull
@@ -39,7 +42,7 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Item item = addList.get(i);
         //todo set Image Bill
         viewHolder.txtTopic.setText(item.getTopic());
@@ -47,12 +50,17 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
         viewHolder.txtAmount.setText(item.getAmount());
         viewHolder.txtTime.setText(item.getTime());
 
-        if(item.getUrl() != ""){
+        if(item.getUrl() != "" && item.getUrl() != null){
             Uri uri = Uri.parse(item.getUrl());
             viewHolder.imgBill.setImageURI(uri);
         }
 
-        viewHolder.bind(i, onItemClick);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick.onItemClick(i);
+            }
+        });
     }
 
     @Override
@@ -75,14 +83,6 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.ViewHolder> {
             txtName = itemView.findViewById(R.id.txt_name);
             txtAmount = itemView.findViewById(R.id.txt_amount);
             txtTime = itemView.findViewById(R.id.txt_time);
-        }
-
-        public void bind(final int pos, final OnItemClick listener) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    listener.onItemClick(pos);
-                }
-            });
         }
     }
 

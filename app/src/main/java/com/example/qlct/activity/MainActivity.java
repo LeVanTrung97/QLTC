@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     private PagerAdapter adapter;
 
+    public static int id = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

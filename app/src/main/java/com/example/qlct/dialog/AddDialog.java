@@ -46,6 +46,8 @@ public class AddDialog extends DialogFragment {
     private Callback callback;
     private Item item;
 
+    private RealmController realmController;
+
     public AddDialog() {
     }
 
@@ -178,6 +180,9 @@ public class AddDialog extends DialogFragment {
         item.setTime(txtTime.getText().toString());
         item.setAmount(edtAmount.getText().toString());
         //todo save to real
+
+        realmController = new RealmController();
+        realmController.addItem(item);
     }
 
     public interface Callback{

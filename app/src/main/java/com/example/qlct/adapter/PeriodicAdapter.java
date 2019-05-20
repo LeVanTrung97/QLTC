@@ -19,6 +19,13 @@ public class PeriodicAdapter extends RecyclerView.Adapter<PeriodicAdapter.ViewHo
     private List<Item> periodicList;
     private Context context;
 
+    private PeriodicAdapter.OnItemClick onItemClick;
+
+    public void setOnItemClick(PeriodicAdapter.OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
+
     public PeriodicAdapter(Context context, List<Item> periodicList) {
         this.periodicList = periodicList;
         this.context = context;
@@ -32,12 +39,19 @@ public class PeriodicAdapter extends RecyclerView.Adapter<PeriodicAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Item item = periodicList.get(i);
         viewHolder.txtTopic.setText(item.getTopic());
         viewHolder.txtName.setText(item.getName());
         viewHolder.txtAmount.setText(item.getAmount());
         viewHolder.cbPeriodic.setChecked(item.isChecked());
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick.onItemClick(i);
+            }
+        });
     }
 
     @Override
@@ -60,4 +74,9 @@ public class PeriodicAdapter extends RecyclerView.Adapter<PeriodicAdapter.ViewHo
 
         }
     }
+
+    public interface OnItemClick{
+        void onItemClick(int pos);
+    }
+
 }

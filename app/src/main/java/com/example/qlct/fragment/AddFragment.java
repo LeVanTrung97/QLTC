@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.qlct.R;
+import com.example.qlct.activity.MainActivity;
 import com.example.qlct.adapter.AddAdapter;
 import com.example.qlct.adapter.PeriodicAdapter;
 import com.example.qlct.dialog.AddDialog;
 import com.example.qlct.model.Item;
+import com.example.qlct.realm.RealmController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,8 @@ public class AddFragment extends Fragment {
     private AddAdapter addAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private RealmController realmController;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +47,18 @@ public class AddFragment extends Fragment {
     }
 
     private void initData() {
-        addList.clear();
-        Item a = new Item(1, "Tiền lương", "Công việc", "12/4/2019", "", "7.000.000", "");
-        addList.add(a);
+        realmController = new RealmController();
+
+        addList = realmController.getItem(1);
+
+//        addList.clear();
+//        Item a = new Item(MainActivity.id++, 1, "Tiền lương", "Công việc", "12/4/2019", "", "7.000.000", "");
+//        addList.add(a);
     }
 
     private void initViews() {
-        addAdapter = new AddAdapter(getContext(), addList, new AddAdapter.OnItemClick() {
+        addAdapter = new AddAdapter(getContext(), addList);
+        addAdapter.setOnItemClick(new AddAdapter.OnItemClick() {
             @Override
             public void onItemClick(int pos) {
                 Item item = addList.get(pos);
@@ -67,7 +76,7 @@ public class AddFragment extends Fragment {
             @Override
             public void onResult(Item item) {
                 //todo update lai data get tu realm sau khi sua
-                addList.add(item);
+                addList = realmController.getItem(1);
                 addAdapter.notifyDataSetChanged();
             }
         });
@@ -81,7 +90,9 @@ public class AddFragment extends Fragment {
             @Override
             public void onResult(Item item) {
                 //todo update lai data get tu realm sau khi them moi
-                addList.add(item);
+//                addList.add(item);
+//                addAdapter.notifyDataSetChanged();
+                addList = realmController.getItem(1);
                 addAdapter.notifyDataSetChanged();
             }
         });

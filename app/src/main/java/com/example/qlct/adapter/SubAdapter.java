@@ -20,6 +20,12 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
     private List<Item> subList;
     private Context context;
 
+    private SubAdapter.OnItemClick onItemClick;
+
+    public void setOnItemClick(SubAdapter.OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
     public SubAdapter(Context context, List<Item> subList) {
         this.subList = subList;
         this.context = context;
@@ -33,7 +39,7 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Item item = subList.get(i);
         //todo set Image Bill
         viewHolder.txtTopic.setText(item.getTopic());
@@ -41,10 +47,17 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
         viewHolder.txtAmount.setText(item.getAmount());
         viewHolder.txtTime.setText(item.getTime());
 
-        if(item.getUrl() != ""){
+        if(item.getUrl() != "" && item.getUrl() != null){
             Uri uri = Uri.parse(item.getUrl());
             viewHolder.imgBill.setImageURI(uri);
         }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick.onItemClick(i);
+            }
+        });
     }
 
     @Override
@@ -69,4 +82,9 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
             txtTime = itemView.findViewById(R.id.txt_time);
         }
     }
+
+    public interface OnItemClick{
+        void onItemClick(int pos);
+    }
+
 }
